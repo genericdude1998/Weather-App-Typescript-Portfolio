@@ -7,6 +7,7 @@ import {BsArrowRightCircleFill} from 'react-icons/bs';
 
 interface ISelectCityProps {
     cities: string[],
+    setCity: (city:string) => void,
 }
 
 interface ISelectCityState{
@@ -54,7 +55,7 @@ class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
         return(
             <Container>
                 <BsArrowLeftCircleFill size={20} onClick={this.scrollLeft}/>
-                <StyledList cities={cities}/>
+                <StyledList cities={cities} setCity={this.props.setCity}/>
                 <BsArrowRightCircleFill size={20} onClick={this.scrollRight}/> 
             </Container>
         );

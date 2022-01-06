@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 
-interface ISelectCityProps{
-    cities:string[],
+interface ISelectCityListProps{
+    cities: string[],
+    setCity: (city:string) => void,
 }
     const StyledList = styled.div`
         background-color: white;
@@ -26,13 +27,18 @@ const StyledElement = styled.div`
     margin: 10px;
 `
 
-class SelectCityList extends React.Component<ISelectCityProps>{
+class SelectCityList extends React.Component<ISelectCityListProps>{
     
     public render(){
-        const {cities} = this.props;
+        const {cities, setCity} = this.props;
         return(
             <StyledList> {cities.map(city => {
-                return <StyledElement key={city}>{city}</StyledElement>
+                return <StyledElement 
+                    key={city}
+                    onClick={() => setCity(city)}
+                    >
+                        {city}
+                    </StyledElement>
                 })}
             </StyledList>
         )
