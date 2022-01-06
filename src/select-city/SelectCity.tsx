@@ -1,4 +1,6 @@
 import React from "react";
+import { StyledSelectCityButton } from "../select-city-button/SelectCityButton";
+import StyledList from "../select-city-list/SelectCityList";
 
 interface ISelectCityProps {
     cities: string[],
@@ -29,11 +31,8 @@ class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
         const open = this.state.open;
         return(
             <>
-                <button onClick={this.openCityList}>Select City</button>
-                {open ? <ul> {cities.map(city => {
-                            return <li key={city}>{city}</li>
-                            })}
-                        </ul>
+                <StyledSelectCityButton onClick={this.openCityList}>Select City</StyledSelectCityButton>
+                {open ? <StyledList cities={cities}/>
                 :null}
             </>
         );
