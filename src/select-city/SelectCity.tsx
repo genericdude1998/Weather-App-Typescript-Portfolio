@@ -1,40 +1,62 @@
 import React from "react";
-import { StyledSelectCityButton } from "../select-city-button/SelectCityButton";
 import StyledList from "../select-city-list/SelectCityList";
+import styled from "styled-components";
+import {BsArrowLeftCircleFill} from 'react-icons/bs';
+import {BsArrowRightCircleFill} from 'react-icons/bs';
+
 
 interface ISelectCityProps {
     cities: string[],
 }
 
 interface ISelectCityState{
-    open: boolean,
+    index: number,
 }
+
+const Container = styled.div`
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    overflow: hidden;
+`
 
 class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
     
     constructor(props: ISelectCityProps) {
         super(props);
         this.state = {
-            open: false,
+            index: 0,
         }
-        this.openCityList = this.openCityList.bind(this);
+        this.scrollRight = this.scrollRight.bind(this);
+        this.scrollLeft = this.scrollLeft.bind(this);
     }
 
-    private openCityList(){
+    private scrollRight(){
         this.setState((prevState) => {
-            return {open: !prevState.open}
+            if(prevState.index !== 1){
+                return {index: prevState.index + 1};
+            }
+        })
+    }
+
+    private scrollLeft(){
+        this.setState((prevState) => {
+            if(prevState.index === 1){
+                return {index: prevState.index - 1};
+            }
         })
     }
 
     public render() {
-        const cities = this.props.cities;
-        const open = this.state.open;
+        const cities = this.state.index === 0 ? this.props.cities.slice(0,3)
+        :
+        this.props.cities.slice(3,6);
         return(
-            <>
-                <StyledSelectCityButton onClick={this.openCityList}>Select City</StyledSelectCityButton>
-                {open ? <StyledList cities={cities}/>
-                :null}
-            </>
+            <Container>
+                <BsArrowLeftCircleFill size={20} onClick={this.scrollLeft}/>
+                <StyledList cities={cities}/>
+                <BsArrowRightCircleFill size={20} onClick={this.scrollRight}/> 
+            </Container>
         );
     }
 }
