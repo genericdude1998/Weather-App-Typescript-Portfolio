@@ -86,8 +86,7 @@ class App extends React.Component<{}, IState> {
                     setCity = {this.setCity}
                 />
                 <City name={currentCity} />
-                <Weather cloud={currentWeather.cloud}/>
-                <WiCloud size={150}/>
+                <Weather cloud={this.state.currentWeather.cloud}/>
                 <Temperature temp={currentWeather.temperature}/>
             </Container>
             </>
