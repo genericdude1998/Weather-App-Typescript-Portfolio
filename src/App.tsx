@@ -8,6 +8,10 @@ import {WiDayHail, WiCloud} from 'react-icons/wi';
 import Temperature from "./Temperature";
 import Global from "./global";
 
+import Clear from '../assets/Clear.jpg';
+import Clouds from '../assets/Clouds.jpg';
+import Fog from '../assets/Fog.jpg';
+
 export interface ICurrentWeather {
     desc:string,
     temperature: string,
@@ -19,7 +23,25 @@ interface IState {
     currentWeather: ICurrentWeather,
 }
 
-const Container = styled.div` 
+interface IContainerProps{
+    desc:string;
+}
+
+const Container = styled.div<IContainerProps>`
+    margin:0px;
+    background-image: ${
+    props => {
+        switch (props.desc) {
+            case 'ThunderStorm': return `url(${Clouds})`;
+            case 'Drizzle': return `url(${Clouds})`;
+            case 'Rain': return `url(${Clouds})`;
+            case 'Clouds': return `url(${Clouds})`;
+            case 'Clear': return `url(${Clear})`;
+            case 'Clear': return `url(${Clear})`;
+            default: return `url(${Fog})`;
+        }
+    }};
+    background-size: 100vw 100vh;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -79,7 +101,7 @@ class App extends React.Component<{}, IState> {
         return (
             <>
             <Global/>
-            <Container>
+            <Container desc={currentWeather.desc}>
                 <SelectCity 
                     cities={cities}
                     setCity = {this.setCity}

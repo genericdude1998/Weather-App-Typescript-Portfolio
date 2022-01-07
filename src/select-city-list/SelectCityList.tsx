@@ -18,7 +18,7 @@ interface ISelectCityListProps{
 
 const StyledElement = styled.div`
     color:white;
-    background-color:royalblue;
+    background-color:darkblue;
     width: 100%;
     min-width:100px;
     height: 20vh;
