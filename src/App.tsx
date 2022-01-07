@@ -9,7 +9,7 @@ import Temperature from "./Temperature";
 import Global from "./global";
 
 export interface ICurrentWeather {
-    cloud:string,
+    desc:string,
     temperature: string,
 }
 
@@ -24,7 +24,6 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: white; 
 `
 
 class App extends React.Component<{}, IState> {
@@ -32,7 +31,7 @@ class App extends React.Component<{}, IState> {
         cities: ['Rome', 'New York', 'Amsterdam','London', 'Manchester','Berlin',],
         currentCity: 'Rome',
         currentWeather:{
-            cloud:'Cloudy',
+            desc:'Cloudy',
             temperature:'9'
         }
     }
@@ -42,10 +41,10 @@ class App extends React.Component<{}, IState> {
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
             res => {
                 console.log(res);
-                const baseStringCloud = res.data.weather[0].description;
-                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
+                const baseStringDesc = res.data.weather[0].main;
+                const newDesc = baseStringDesc.charAt(0).toUpperCase() + baseStringDesc.slice(1);
                 const newCurrentWeather: ICurrentWeather = {
-                    cloud: newCloud,
+                    desc: newDesc,
                     temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
                 }
 
@@ -59,11 +58,11 @@ class App extends React.Component<{}, IState> {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
             res => {
                 console.log(res);
-                const baseStringCloud = res.data.weather[0].description;
-                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
+                const baseStringDesc = res.data.weather[0].main;
+                const newDesc = baseStringDesc.charAt(0).toUpperCase() + baseStringDesc.slice(1);
 
                 const newCurrentWeather: ICurrentWeather = {
-                    cloud: newCloud,
+                    desc: newDesc,
                     temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
                 }
 
@@ -86,7 +85,7 @@ class App extends React.Component<{}, IState> {
                     setCity = {this.setCity}
                 />
                 <City name={currentCity} />
-                <Weather cloud={this.state.currentWeather.cloud}/>
+                <Weather desc={this.state.currentWeather.desc}/>
                 <Temperature temp={currentWeather.temperature}/>
             </Container>
             </>

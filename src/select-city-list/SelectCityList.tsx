@@ -7,7 +7,6 @@ interface ISelectCityListProps{
     setCity: (city:string) => void,
 }
     const StyledList = styled.div`
-        background-color: white;
         width: 80%;
         display: inline-flex;
         justify-content: space-around;
@@ -27,6 +26,9 @@ const StyledElement = styled.div`
     line-height: 600%;
     box-shadow: 5px 5px #888888;
     margin: 10px;
+    &:hover{
+            transform: scale(1.1,1.1);
+    }
 `
 
 class SelectCityList extends React.Component<ISelectCityListProps>{

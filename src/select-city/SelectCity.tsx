@@ -1,8 +1,6 @@
 import React from "react";
 import StyledList from "../select-city-list/SelectCityList";
 import styled from "styled-components";
-import {BsArrowLeftCircleFill} from 'react-icons/bs';
-import {BsArrowRightCircleFill} from 'react-icons/bs';
 import {IoIosArrowDropleft} from 'react-icons/io';
 import {IoIosArrowDropright} from 'react-icons/io';
 
@@ -23,6 +21,17 @@ const Container = styled.div`
     justify-content: center;
     min-width: 80vw;
     overflow: hidden;
+`
+
+const StyledArrowRight = styled(IoIosArrowDropright)`
+     &:hover{
+            transform: scale(1.2,1.2);
+    }
+`
+const StyledArrowLeft = styled(IoIosArrowDropleft)`
+     &:hover{
+            transform: scale(1.2,1.2);
+    }
 `
 
 class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
@@ -58,9 +67,9 @@ class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
         this.props.cities.slice(3,6);
         return(
             <Container>
-                <IoIosArrowDropleft size={30} onClick={this.scrollLeft}/>
+                <StyledArrowLeft size={30} onClick={this.scrollLeft}/>
                 <StyledList cities={cities} setCity={this.props.setCity}/>
-                <IoIosArrowDropright size={30} onClick={this.scrollRight}/> 
+                <StyledArrowRight size={30} onClick={this.scrollRight}/> 
             </Container>
         );
     }
