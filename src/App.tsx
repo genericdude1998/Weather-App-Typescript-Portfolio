@@ -4,6 +4,9 @@ import styled from "styled-components";
 import City from "./City";
 import SelectCity from "./select-city/SelectCity";
 import Weather from "./Weather";
+import {WiDayHail, WiCloud} from 'react-icons/wi';
+import Temperature from "./Temperature";
+import Global from "./global";
 
 export interface ICurrentWeather {
     cloud:string,
@@ -19,7 +22,7 @@ interface IState {
 const Container = styled.div` 
     height: 100vh;
     display: flex;
-    align-items: space-around;
+    align-items: center;
     flex-direction: column;
     background-color: white; 
 `
@@ -58,7 +61,7 @@ class App extends React.Component<{}, IState> {
                 console.log(res);
                 const baseStringCloud = res.data.weather[0].description;
                 const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
-                
+
                 const newCurrentWeather: ICurrentWeather = {
                     cloud: newCloud,
                     temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
@@ -75,14 +78,19 @@ class App extends React.Component<{}, IState> {
         const {cities, currentCity, currentWeather} = this.state;
         
         return (
+            <>
+            <Global/>
             <Container>
                 <SelectCity 
                     cities={cities}
                     setCity = {this.setCity}
                 />
                 <City name={currentCity} />
-                <Weather weather={currentWeather}/>
+                <Weather cloud={currentWeather.cloud}/>
+                <WiCloud size={150}/>
+                <Temperature temp={currentWeather.temperature}/>
             </Container>
+            </>
         );
     }
 }

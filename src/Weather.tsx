@@ -1,17 +1,18 @@
 import React from "react";
-import { ICurrentWeather } from "./App";
+import styled from "styled-components";
 
 interface IWeatherProps {
-    weather: ICurrentWeather,
+    cloud: string,
 }
+
+const StyledWeather = styled.p`
+    margin-top:-20px;
+`
 
 class Weather extends React.Component<IWeatherProps> {
     public render() {
         return(
-            <>
-                <h1>{this.props.weather.cloud}</h1>
-                <h1>{this.props.weather.temperature}</h1>
-            </>
+            <StyledWeather>{this.props.cloud}</StyledWeather>
         );
     }
 }
