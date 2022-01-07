@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {ImCodepen, ImSpinner} from 'react-icons/im';
-import {WiDaySunny, WiCloud, WiDayCloudy, WiDayHail, WiHail, WiThunderstorm, WiSnow, WiFog, WiDayCloudyHigh} from 'react-icons/wi';
+import {WiDaySunny, WiCloud, WiDayCloudy, WiDayHail, WiHail, WiThunderstorm, WiSnow, WiFog} from 'react-icons/wi';
 
 interface IWeatherProps {
     desc: string,
@@ -22,7 +22,8 @@ class Weather extends React.Component<IWeatherProps> {
             case 'Rain': Icon = WiHail;break;
             case 'Thunderstorm': Icon = WiThunderstorm;break;
             case 'Snow': Icon = WiSnow;break;
-            case 'Atmosphere': Icon = WiFog;break;
+            case 'Haze': Icon = WiFog;break;
+            default: Icon = WiFog;  
         }
         return(
             <>
