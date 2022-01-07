@@ -1,14 +1,16 @@
 import React from "react";
+import { ICurrentWeather } from "./App";
 
 interface IWeatherProps {
-    weather:string,
+    weather: ICurrentWeather,
 }
 
 class Weather extends React.Component<IWeatherProps> {
     public render() {
         return(
             <>
-                <h1>{this.props.weather}</h1>
+                <h1>{this.props.weather.cloud}</h1>
+                <h1>{this.props.weather.temperature}</h1>
             </>
         );
     }

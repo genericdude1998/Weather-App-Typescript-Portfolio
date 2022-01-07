@@ -1,11 +1,19 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import City from "./City";
 import SelectCity from "./select-city/SelectCity";
 import Weather from "./Weather";
 
+export interface ICurrentWeather {
+    cloud:string,
+    temperature: string,
+}
+
 interface IState {
+    cities: string[],
     currentCity:string,
+    currentWeather: ICurrentWeather,
 }
 
 const Container = styled.div` 
@@ -17,25 +25,63 @@ const Container = styled.div`
 `
 
 class App extends React.Component<{}, IState> {
-
     state = {
-        currentCity: ''
+        cities: ['Rome', 'New York', 'Amsterdam','London', 'Manchester','Berlin',],
+        currentCity: 'Rome',
+        currentWeather:{
+            cloud:'Cloudy',
+            temperature:'9'
+        }
+    }
+
+    componentDidMount(){
+        const city = this.state.cities[0];
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
+            res => {
+                console.log(res);
+                const baseStringCloud = res.data.weather[0].description;
+                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
+                const newCurrentWeather: ICurrentWeather = {
+                    cloud: newCloud,
+                    temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
+                }
+
+                this.setState({currentWeather: newCurrentWeather});
+            });
+    }
+
+    componentDidUpdate(prevProps:{}, prevState:IState){
+        if(prevState.currentCity !== this.state.currentCity){
+            const city = this.state.currentCity;
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
+            res => {
+                console.log(res);
+                const baseStringCloud = res.data.weather[0].description;
+                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
+                
+                const newCurrentWeather: ICurrentWeather = {
+                    cloud: newCloud,
+                    temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
+                }
+
+                this.setState({currentWeather: newCurrentWeather});
+        });
+        }
     }
 
     setCity = (city:string) => this.setState({currentCity: city})
 
     public render() {
+        const {cities, currentCity, currentWeather} = this.state;
+        
         return (
             <Container>
                 <SelectCity 
-                cities={[
-                    'Rome', 'New York', 'Amsterdam',
-                    'London', 'Manchester','Berlin',
-                ]}
-                setCity = {this.setCity}/>
-
-                <City name={this.state.currentCity} coordinates={'NSWE'}/>
-                <Weather weather={'sample_weather'}/>
+                    cities={cities}
+                    setCity = {this.setCity}
+                />
+                <City name={currentCity} />
+                <Weather weather={currentWeather}/>
             </Container>
         );
     }
