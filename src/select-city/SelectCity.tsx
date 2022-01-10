@@ -1,8 +1,9 @@
 import React from "react";
 import StyledList from "../select-city-list/SelectCityList";
 import styled from "styled-components";
-import {BsArrowLeftCircleFill} from 'react-icons/bs';
-import {BsArrowRightCircleFill} from 'react-icons/bs';
+import {IoIosArrowDropleft} from 'react-icons/io';
+import {IoIosArrowDropright} from 'react-icons/io';
+
 
 
 interface ISelectCityProps {
@@ -18,7 +19,20 @@ const Container = styled.div`
     display: flex;
     align-items:center;
     justify-content: center;
+    min-width: 80vw;
     overflow: hidden;
+    margin:10px;
+`
+
+const StyledArrowRight = styled(IoIosArrowDropright)`
+     &:hover{
+            transform: scale(1.2,1.2);
+    }
+`
+const StyledArrowLeft = styled(IoIosArrowDropleft)`
+     &:hover{
+            transform: scale(1.2,1.2);
+    }
 `
 
 class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
@@ -54,9 +68,9 @@ class SelectCity extends React.Component<ISelectCityProps, ISelectCityState> {
         this.props.cities.slice(3,6);
         return(
             <Container>
-                <BsArrowLeftCircleFill size={20} onClick={this.scrollLeft}/>
+                <StyledArrowLeft size={30} onClick={this.scrollLeft}/>
                 <StyledList cities={cities} setCity={this.props.setCity}/>
-                <BsArrowRightCircleFill size={20} onClick={this.scrollRight}/> 
+                <StyledArrowRight size={30} onClick={this.scrollRight}/> 
             </Container>
         );
     }

@@ -4,9 +4,19 @@ import styled from "styled-components";
 import City from "./City";
 import SelectCity from "./select-city/SelectCity";
 import Weather from "./Weather";
+import {WiDayHail, WiCloud} from 'react-icons/wi';
+import Temperature from "./Temperature";
+import Global from "./global";
+
+import Clear from '../assets/Clear.jpg';
+import Clouds from '../assets/Clouds.jpg';
+import Fog from '../assets/Fog.jpg';
+
+import breakpoint from './breakpoints.js';
+import media from "styled-media-query";
 
 export interface ICurrentWeather {
-    cloud:string,
+    desc:string,
     temperature: string,
 }
 
@@ -16,12 +26,31 @@ interface IState {
     currentWeather: ICurrentWeather,
 }
 
-const Container = styled.div` 
+interface IContainerProps{
+    desc:string;
+}
+
+const Container = styled.div<IContainerProps>`
+    margin:0px;
+    background-image: ${
+    props => {
+        switch (props.desc) {
+            case 'ThunderStorm': return `url(${Clouds})`;
+            case 'Drizzle': return `url(${Clouds})`;
+            case 'Rain': return `url(${Clouds})`;
+            case 'Clouds': return `url(${Clouds})`;
+            case 'Clear': return `url(${Clear})`;
+            case 'Clear': return `url(${Clear})`;
+            default: return `url(${Fog})`;
+        }
+    }};
+    background-size: 100vw 100vh;
     height: 100vh;
     display: flex;
-    align-items: space-around;
+    justify-content: space-evenly;
+    align-items: center;
     flex-direction: column;
-    background-color: white; 
+    font-size: 50px;
 `
 
 class App extends React.Component<{}, IState> {
@@ -29,7 +58,7 @@ class App extends React.Component<{}, IState> {
         cities: ['Rome', 'New York', 'Amsterdam','London', 'Manchester','Berlin',],
         currentCity: 'Rome',
         currentWeather:{
-            cloud:'Cloudy',
+            desc:'Cloudy',
             temperature:'9'
         }
     }
@@ -39,10 +68,10 @@ class App extends React.Component<{}, IState> {
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
             res => {
                 console.log(res);
-                const baseStringCloud = res.data.weather[0].description;
-                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
+                const baseStringDesc = res.data.weather[0].main;
+                const newDesc = baseStringDesc.charAt(0).toUpperCase() + baseStringDesc.slice(1);
                 const newCurrentWeather: ICurrentWeather = {
-                    cloud: newCloud,
+                    desc: newDesc,
                     temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
                 }
 
@@ -56,11 +85,11 @@ class App extends React.Component<{}, IState> {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0202cadc7f22d242d14160b50c9d955c`).then(
             res => {
                 console.log(res);
-                const baseStringCloud = res.data.weather[0].description;
-                const newCloud = baseStringCloud.charAt(0).toUpperCase() + baseStringCloud.slice(1);
-                
+                const baseStringDesc = res.data.weather[0].main;
+                const newDesc = baseStringDesc.charAt(0).toUpperCase() + baseStringDesc.slice(1);
+
                 const newCurrentWeather: ICurrentWeather = {
-                    cloud: newCloud,
+                    desc: newDesc,
                     temperature: Math.ceil(res.data.main.temp - 273.15).toString(), 
                 }
 
@@ -75,14 +104,18 @@ class App extends React.Component<{}, IState> {
         const {cities, currentCity, currentWeather} = this.state;
         
         return (
-            <Container>
+            <>
+            <Global/>
+            <Container desc={currentWeather.desc}>
                 <SelectCity 
                     cities={cities}
                     setCity = {this.setCity}
                 />
                 <City name={currentCity} />
-                <Weather weather={currentWeather}/>
+                <Weather desc={this.state.currentWeather.desc}/>
+                <Temperature temp={currentWeather.temperature}/>
             </Container>
+            </>
         );
     }
 }
