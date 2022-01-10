@@ -8,7 +8,7 @@ interface IWeatherProps {
 }
 
 const StyledWeather = styled.p`
-    
+    margin: 40px;
 `
 
 class Weather extends React.Component<IWeatherProps> {
@@ -28,7 +28,7 @@ class Weather extends React.Component<IWeatherProps> {
         return(
             <>
                 <StyledWeather>{this.props.desc}</StyledWeather>
-                <Icon size={100}></Icon>
+                <Icon size={200}></Icon>
             </>
         );
     }

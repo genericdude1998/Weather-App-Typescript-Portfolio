@@ -21,6 +21,7 @@ const Container = styled.div`
     justify-content: center;
     min-width: 80vw;
     overflow: hidden;
+    margin:10px;
 `
 
 const StyledArrowRight = styled(IoIosArrowDropright)`

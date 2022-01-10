@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import media from "styled-media-query";
 
 
 interface ISelectCityListProps{
@@ -17,18 +18,26 @@ interface ISelectCityListProps{
     `
 
 const StyledElement = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 50px;
     color:white;
     background-color:darkblue;
-    width: 100%;
+    width: 20vw;
     min-width:100px;
+    min-height: 100px;
     height: 20vh;
     text-align: center;
-    line-height: 600%;
     box-shadow: 5px 5px #888888;
     margin: 10px;
     &:hover{
             transform: scale(1.1,1.1);
     }
+    ${media.lessThan('large')`
+        height: 100px;
+        font-size: 30px;
+    `}
 `
 
 class SelectCityList extends React.Component<ISelectCityListProps>{

@@ -12,6 +12,9 @@ import Clear from '../assets/Clear.jpg';
 import Clouds from '../assets/Clouds.jpg';
 import Fog from '../assets/Fog.jpg';
 
+import breakpoint from './breakpoints.js';
+import media from "styled-media-query";
+
 export interface ICurrentWeather {
     desc:string,
     temperature: string,
@@ -44,8 +47,10 @@ const Container = styled.div<IContainerProps>`
     background-size: 100vw 100vh;
     height: 100vh;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+    font-size: 50px;
 `
 
 class App extends React.Component<{}, IState> {

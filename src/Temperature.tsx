@@ -13,7 +13,9 @@ const Container = styled.div`
 
 const StyledTemp = styled.h1`
     font-size: 10vh;
-    margin-right:-10px;
+    margin-right:-25px;
+    margin-top: 50px;
+    font-size: 100px;
 `
 
 const StyledIconTemp = styled(WiCelsius)`
